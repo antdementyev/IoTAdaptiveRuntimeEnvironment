@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="installationScript">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:string" name="scriptName"/>
+                <xs:element type="xs:string" name="script"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

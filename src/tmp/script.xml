@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installationScript>
+    <scriptName>
+        Hier is test script
+    </scriptName>
+    <script>
+        for (i = 0; i &lt; 5; i++) 
+		{ console.log(&quot;Im from xml&quot;); } hal.do1(); hal.do1();
+    </script>
+</installationScript>
