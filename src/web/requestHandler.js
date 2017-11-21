@@ -15,9 +15,11 @@ function getHandler(request) {
 }
 
 function onStart(response) {
+    console.info("Called start");
     fs.readFile("./web/html/start.html", function(error, html) {
         if (error) {
             writeResponse(response, 500, error);
+            console.error("Could not load the start page.");
         } else {
             writeResponse(response, 200, html);
         }
@@ -25,10 +27,12 @@ function onStart(response) {
 }
 
 function onUpload(response, request) {
+    console.info("Called upload");
+
     // check content lenght
     var contentLength = request.headers['content-length'];
     if (isNaN(contentLength) || contentLength > applicationConstants.UPLOAD_MAX_FILE_SIZE) {
-        console.warn("Aborted upload of content with lenght " + contentLength);
+        console.warn("Aborted upload of content with lenght " + contentLength + "B");
         writeResponse(response, 413, "Uploaded content is too big.");
         return;
     }
@@ -44,26 +48,23 @@ function onUpload(response, request) {
             return;
         }
 
-        // validate file
+        // validate and save script from file
         var uploadedFilePath = files.upload.path;
-        var validationMessage = uploadFileValidator.validate(uploadedFilePath);
+        var validationMessage = uploadFileValidator.validateAndSaveScriptFrom(uploadedFilePath);
         if (validationMessage) {
             var message = "Uploaded file is not valid: " + validationMessage;
             console.warn(message);
             writeResponse(response, 400, message);
-            // remove uploaded file
-            if (fs.existsSync(uploadedFilePath)) {
-                fs.unlinkSync(uploadedFilePath);
-            }
-            return;
+        } else {
+            var message = "Script successful uploaded";
+            console.info(message);
+            writeResponse(response, 200, message);
         }
 
-        // save file
-        var scriptPath = applicationConstants.UPLOAD_DIRECTORY + applicationConstants.UPLOAD_SCRIPT_NAME;
-        fs.renameSync(uploadedFilePath, scriptPath);
-
-        console.info("Uploaded script saved into " + scriptPath);
-        writeResponse(response, 200, "Script successful uploaded");
+        // remove uploaded file
+        if (fs.existsSync(uploadedFilePath)) {
+            fs.unlinkSync(uploadedFilePath);
+        }
     });
 }
 
