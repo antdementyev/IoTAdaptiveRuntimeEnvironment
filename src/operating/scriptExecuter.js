@@ -1,26 +1,21 @@
 var fs = require('fs');
-var path = require('path');
-
-var xml2js = require('xml2js');
 var hal = require("../hal/hal");
+var validator = require("./validation/uploadFileValidator");
+var applicationConstants = require("../configuration/applicationConstants");
 
 function start() {
-    var filePath = "./tmp/script.xml";
-    var fileDirectory = path.dirname(filePath);
-    var fileName = path.basename(filePath);
-
+    var fileDirectory = applicationConstants.SCRIPTS_DIRECTORY;
     fs.watch(fileDirectory, function(eventType, changedFile) {
+
+        var filePath = fileDirectory + changedFile;
         if ((eventType === "rename" || eventType === "change")
-                && changedFile === fileName && fs.existsSync(filePath)) {
+                && fs.existsSync(filePath)
+                && changedFile === "script1.js"
+                && !validator.validateScript(filePath)) {
 
-            var content = fs.readFileSync(filePath);
-
-            var parser = new xml2js.Parser();
-            parser.parseString(content, function(err, result) {
-                var scriptToCall = result.installationScript.script[0];
-                console.dir(scriptToCall);
-                eval(scriptToCall);
-            });
+            console.info("Execute '" + filePath + "'");
+            var content = fs.readFileSync(fileDirectory + changedFile, 'utf8');
+            eval(content);
         }
     });
 }

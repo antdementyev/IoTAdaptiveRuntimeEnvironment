@@ -5,6 +5,10 @@ module.exports = {
     UPLOAD_MAX_FILE_SIZE: 100 * 1024,   // 100 kB
     UPLOAD_ALLOWED_EXTENSIONS: [".xml"],
     UPLOAD_DIRECTORY : "./tmp/",
-    UPLOAD_SCRIPT_NAME : "script.xml"
 
+    // validation
+    JSHINT_CONFIG_PATH : "./operating/validation/jshint_config.json",
+    XSD_SCHEMA_PATH : "./operating/validation/uploadScriptSchema.xsd",
+
+    SCRIPTS_DIRECTORY : "./scripts/"
 }
