@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installationScript>
+    <scriptName>script1</scriptName>
+    <script>
+var i;
+for (i = 0; i &lt; 5; i++) { 
+    console.log(&quot;Im from xml&quot;);
+} 
+hal.do1();
+//hal.do3(); // this function does not exist 
+hal.do2();
+console.log(hereUndefinedVariable);
+    </script>
+    <signatureProvider>
+        <providerName>ScriptProvider</providerName>
+        <signature>kY0ZRPKU7pVNlPKvyi5zidC49JplUyLBSgvy+pCX6DxHr+YCd76GTjbFWvUckyUTim7nfL4fjTQyX2R549O3gg0jTrV1KBduIEUSDciln7FiH8EpIYYSbgtocSzpC5q+xVotCYUqe7sv55FNi8yUYneQpDZnI5dPboBqqTFGI68=</signature>
+    </signatureProvider>
+</installationScript>
+
+
