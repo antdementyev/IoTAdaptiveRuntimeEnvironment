@@ -119,7 +119,9 @@ function validateSignature(script, parsedXml) {
     }
 
     // check signature
-    var signature = scriptProviderInfo.signature[0];
+    var signature = scriptProviderInfo.signature[0]
+        .toString("utf8")
+        .trim();
     return signatureValidator.validate(script, signature);
 }
 
