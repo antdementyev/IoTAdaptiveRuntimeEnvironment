@@ -87,7 +87,7 @@ function extractScript(fileContent) {
 }
 
 function validateScriptSyntax(script) {
-    // need to save script at first to be able to validate with it jshint
+    // need to save script at first to be able to validate it with jshint
     var scriptPath = saveScript(applicationConstants.UPLOAD_DIRECTORY, script);
     var validationError = validateScript(scriptPath);
     if (validationError) {
