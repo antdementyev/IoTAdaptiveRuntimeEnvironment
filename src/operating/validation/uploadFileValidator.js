@@ -3,7 +3,9 @@ var path = require('path');
 var libxmljs = require('libxmljs');
 var xml2js = require('xml2js');
 var exec = require("child_process").execSync;
+
 var applicationConstants = require("../../configuration/applicationConstants");
+var signatureValidator = require("./rsa/signatureValidator");
 
 
 /**
@@ -12,24 +14,47 @@ var applicationConstants = require("../../configuration/applicationConstants");
  */
 function validateAndSaveScriptFrom(filePath) {
     try {
+        // validate file type
         var validationError = validateFile(filePath);
         if (validationError) {
             return validationError;
         }
 
+        // validate xml structure of file
         var fileContent = fs.readFileSync(filePath);
         validationError = validateXmlContent(fileContent);
         if (validationError) {
             return validationError;
         }
 
-        var script = extractScript(fileContent);
+        // extract script form xml
+        var parsedXml = parseXml(fileContent);
+        var script = parsedXml.installationScript
+            .script[0]
+            .toString("utf8")
+            .trim();
+
+        // validate provider signature
+        validationError = validateSignature(script, parsedXml)
+        if (validationError) {
+            return validationError;
+        }
+
+        // validate script syntax
         validationError = validateScriptSyntax(script);
         if (validationError) {
             return validationError;
         }
 
-        var scriptPath = saveScript(applicationConstants.SCRIPTS_DIRECTORY, script);
+        // TODO check all hal functions are supported
+        // TODO check script executing is safe for system
+
+        // uploaded script is valid and can be executed -> save it
+        var scriptName = parsedXml.installationScript
+            .scriptName[0]
+            .toString("utf8")
+            .trim();
+        var scriptPath = saveScript(applicationConstants.SCRIPTS_DIRECTORY, scriptName, script);
         console.info("Saved new script: " + scriptPath);
 
     } catch (error) {
@@ -71,24 +96,36 @@ function validateXmlContent(fileContent) {
     }
 }
 
-function extractScript(fileContent) {
-    var scriptName = null;
-    var script = null;
+function parseXml(xml) {
+    var xmlTree = null;
     var parser = new xml2js.Parser();
-    parser.parseString(fileContent, function(error, result) {       // this call is sync
+    parser.parseString(xml, function(error, result) {       // this call is sync
         if (error) {
             throw error;
         }
-        scriptName = result.installationScript.scriptName[0];
-        script = result.installationScript.script[0];
+        xmlTree = result;
     });
 
-    return [scriptName, script];
+    return xmlTree;
+}
+
+function validateSignature(script, parsedXml) {
+    // check provider
+    var scriptProviderInfo = parsedXml.installationScript
+        .signatureProvider[0];
+    var scriptProvider = scriptProviderInfo.providerName[0];
+    if (applicationConstants.SCRIPT_PROVIDER_NAME !== scriptProvider) {
+        return "Unknown script provider.";
+    }
+
+    // check signature
+    var signature = scriptProviderInfo.signature[0];
+    return signatureValidator.validate(script, signature);
 }
 
 function validateScriptSyntax(script) {
     // need to save script at first to be able to validate it with jshint
-    var scriptPath = saveScript(applicationConstants.UPLOAD_DIRECTORY, script);
+    var scriptPath = saveScript(applicationConstants.UPLOAD_DIRECTORY, "script", script);
     var validationError = validateScript(scriptPath);
     if (validationError) {
         fs.unlinkSync(scriptPath);
@@ -114,13 +151,9 @@ function validateScript(scriptPath) {
             .replace(/(\r\n|\n|\r)/gm, " ")      // output to one line
             .replace(/\s+/g, " ");               // remove double white spaces
     }
-
-    // TODO check all hal functions are supported
 }
 
-function saveScript(directory, script) {
-    var scriptName = script[0];
-    var scriptContent = script[1];
+function saveScript(directory, scriptName, scriptContent) {
     var scriptPath = directory + scriptName + ".js";
     fs.writeFileSync(scriptPath, scriptContent);
     return scriptPath;

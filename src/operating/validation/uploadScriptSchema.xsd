@@ -5,6 +5,14 @@
             <xs:sequence>
                 <xs:element type="xs:string" name="scriptName"/>
                 <xs:element type="xs:string" name="script"/>
+                <xs:element name="signatureProvider">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="providerName"/>
+                            <xs:element type="xs:string" name="signature"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

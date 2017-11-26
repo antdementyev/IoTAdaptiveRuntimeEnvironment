@@ -9,6 +9,9 @@ module.exports = {
     // validation
     JSHINT_CONFIG_PATH : "./operating/validation/jshint_config.json",
     XSD_SCHEMA_PATH : "./operating/validation/uploadScriptSchema.xsd",
+    // ...signature
+    SCRIPT_PROVIDER_NAME : "ScriptProvider",
+    SCRIPT_PROVIDER_CERTIFICATE_PATH : "./operating/validation/rsa/rsa.pub",
 
     SCRIPTS_DIRECTORY : "./scripts/"
 }
