@@ -2,12 +2,12 @@ var fs = require('fs');
 var path = require('path');
 var libxmljs = require('libxmljs');
 var xml2js = require('xml2js');
-var exec = require("child_process").exec;
+var exec = require("child_process").execSync;
 var applicationConstants = require("../../configuration/applicationConstants");
 
 
 /**
- * Validates the given file and saves the contained script
+ * Validates the given XML file and saves the contained script
  * or returns a possible validation error.
  */
 function validateAndSaveScriptFrom(filePath) {
@@ -75,7 +75,7 @@ function extractScript(fileContent) {
     var scriptName = null;
     var script = null;
     var parser = new xml2js.Parser();
-    parser.parseString(fileContent, function(error, result) {
+    parser.parseString(fileContent, function(error, result) {       // this call is sync
         if (error) {
             throw error;
         }
@@ -87,7 +87,7 @@ function extractScript(fileContent) {
 }
 
 function validateScriptSyntax(script) {
-    // need to save script at first to be able to validate with jshint
+    // need to save script at first to be able to validate with it jshint
     var scriptPath = saveScript(applicationConstants.UPLOAD_DIRECTORY, script);
     var validationError = validateScript(scriptPath);
     if (validationError) {
@@ -97,31 +97,22 @@ function validateScriptSyntax(script) {
 }
 
 function validateScript(scriptPath) {
+    if ((typeof scriptPath === 'undefined') || !fs.existsSync(scriptPath)) {
+        return "File " + scriptPath + " does not exist.";
+    }
     if (path.extname(scriptPath) !== ".js") {
         return "File " + scriptPath + " is not a javascript file.";
     }
 
     // check syntax
-    var syntaxErrors = null;
-    var bashCkeckSyntax = "jshint " + scriptPath + " --config " + applicationConstants.JSHINT_CONFIG_PATH;
-
-    // ...the sync method does not work, need to use an async one and wait till it is ready
-    var isSyntaxChecked = false;
-    exec(bashCkeckSyntax, function(error, stdout, stderr) {
-        if (error) {
-            console.error("Error while executing of bash command ''" + bashCkeckSyntax + "': " + error);
-            syntaxErrors = error;
-        } else {
-            syntaxErrors = stdout;
-        }
-        isSyntaxChecked = true;
-    });
-    while (!isSyntaxChecked) {
-        // wait
-    }
-
-    if (syntaxErrors) {
-        return syntaxErrors;
+    try {
+        var bashCkeckSyntax = "jshint " + scriptPath + " --config " + applicationConstants.JSHINT_CONFIG_PATH;
+        exec(bashCkeckSyntax);
+    } catch (error) {
+        return error.stdout
+            .toString('utf8')
+            .replace(/(\r\n|\n|\r)/gm, " ")      // output to one line
+            .replace(/\s+/g, " ");               // remove double white spaces
     }
 
     // TODO check all hal functions are supported
