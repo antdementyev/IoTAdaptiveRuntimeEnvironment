@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<installationScript>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
     <scriptName>script1</scriptName>
-    <script>
-var i;
-for (i = 0; i &lt; 5; i++) { 
-    console.log(&quot;Im from xml&quot;);
-} 
-hal.do1();
-hal.do3(); // this function does not exist 
-hal.do2();
+    <script>&#xD;
+var i;&#xD;
+for (i = 0; i &lt; 5; i++) {&#xD;
+    console.log("Im from xml");&#xD;
+}&#xD;
+hal.do1();&#xD;
+hal.do3(); // this function does not exist&#xD;
+hal.do2();&#xD;
     </script>
-    <signatureProvider>
-        <providerName>ScriptProvider</providerName>
-        <signature>f6xay2NmGO6CikB4YBK2nksryrtcTEiqlSoBnqvrPmUbbRsgwbIVx11seoTvE2s5SIx4gLxeh0z7m5ZgxfMjROWemqBgYJScpdfY5Nk7zqHMsQwRno6W/pD/x3BRDKm7U/HaSZyvTB0v9vigjDGWiXmdk7PPs2QKdEMKAp1KhCM=</signature>
-    </signatureProvider>
-</installationScript>
-
-
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>VbhdfC20WIgXrYYZfqzsyQQaBrVsWfBljhb1VFsLDAcG26X9wlGk0wVmDzBzJCF5WBKcsWdj87nhmHNFunpv3Zeg/tvn6SkSWfVrhysIgBV1VOwaXF+7aXUcCifi9oxQWt3sCAD7FQGg7n1c80LYZZr/oog8kqOqGWEWMo8dXTg=</signature>
+  </scriptProvider>
+</document>

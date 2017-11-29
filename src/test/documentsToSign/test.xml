@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+    <installationScript>
+        <scriptName>script</scriptName>
+        <script>
+var i;
+for (i = 0; i &lt; 3; i++) {
+    console.log(&quot;Im from xml&quot;);
+}
+//hal.do1();
+// hal.do3(); // this function does not exist
+hal.do2();
+        </script>
+    </installationScript>
+</document>
