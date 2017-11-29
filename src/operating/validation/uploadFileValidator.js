@@ -27,18 +27,20 @@ function validateAndSaveScriptFrom(filePath) {
             return validationError;
         }
 
-        // extract script form xml
-        var parsedXml = parseXml(fileContent);
-        var script = parsedXml.installationScript
-            .script[0]
-            .toString("utf8")
-            .trim();
+        var contentAsJson = parseXml(fileContent);
 
         // validate provider signature
-        validationError = validateSignature(script, parsedXml)
+        validationError = signatureValidator.validate(contentAsJson);
         if (validationError) {
             return validationError;
         }
+
+        // extract script
+        var script = contentAsJson.document
+            .installationScript[0]
+            .script[0]
+            .toString("utf8")
+            .trim();
 
         // validate script syntax
         validationError = validateScriptSyntax(script);
@@ -50,7 +52,8 @@ function validateAndSaveScriptFrom(filePath) {
         // TODO check script executing is safe for system
 
         // uploaded script is valid and can be executed -> save it
-        var scriptName = parsedXml.installationScript
+        var scriptName = contentAsJson.document
+            .installationScript[0]
             .scriptName[0]
             .toString("utf8")
             .trim();
@@ -85,6 +88,7 @@ function validateXmlContent(fileContent) {
     try {
         fileDoc = libxmljs.parseXml(fileContent);
     } catch (error) {
+        console.error(error);
         return extractStringFirstLine(error);
     }
 
@@ -97,32 +101,16 @@ function validateXmlContent(fileContent) {
 }
 
 function parseXml(xml) {
-    var xmlTree = null;
+    var contentAsJson = null;
     var parser = new xml2js.Parser();
     parser.parseString(xml, function(error, result) {       // this call is sync
         if (error) {
             throw error;
         }
-        xmlTree = result;
+        contentAsJson = result;
     });
 
-    return xmlTree;
-}
-
-function validateSignature(script, parsedXml) {
-    // check provider
-    var scriptProviderInfo = parsedXml.installationScript
-        .signatureProvider[0];
-    var scriptProvider = scriptProviderInfo.providerName[0];
-    if (applicationConstants.SCRIPT_PROVIDER_NAME !== scriptProvider) {
-        return "Unknown script provider.";
-    }
-
-    // check signature
-    var signature = scriptProviderInfo.signature[0]
-        .toString("utf8")
-        .trim();
-    return signatureValidator.validate(script, signature);
+    return contentAsJson;
 }
 
 function validateScriptSyntax(script) {
