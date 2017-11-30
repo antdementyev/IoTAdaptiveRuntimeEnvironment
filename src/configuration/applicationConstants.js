@@ -13,5 +13,7 @@ module.exports = {
     SCRIPT_PROVIDER_NAME : "ScriptProvider",
     SCRIPT_PROVIDER_CERTIFICATE_PATH : "./operating/validation/rsa/rsa.pub",
 
-    SCRIPTS_DIRECTORY : "./scripts/"
+    SCRIPTS_DIRECTORY : "./scripts/",
+
+    SUPPORTED_HAL_PATH : "./hal/supportedFunctions"
 }

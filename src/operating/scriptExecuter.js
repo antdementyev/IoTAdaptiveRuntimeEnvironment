@@ -4,6 +4,9 @@ var validator = require("./validation/uploadFileValidator");
 var applicationConstants = require("../configuration/applicationConstants");
 
 function start() {
+
+    // TODO check script executing is safe for system
+
     var fileDirectory = applicationConstants.SCRIPTS_DIRECTORY;
     fs.watch(fileDirectory, function(eventType, changedFile) {
 

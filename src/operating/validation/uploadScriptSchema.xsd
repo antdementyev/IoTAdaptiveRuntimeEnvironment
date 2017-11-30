@@ -6,6 +6,13 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element type="xs:string" name="scriptName"/>
+              <xs:element name="requiredHalFunctions">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="function" maxOccurs="unbounded" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
               <xs:element type="xs:string" name="script"/>
             </xs:sequence>
           </xs:complexType>

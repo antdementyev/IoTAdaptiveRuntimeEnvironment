@@ -35,6 +35,12 @@ function validateAndSaveScriptFrom(filePath) {
             return validationError;
         }
 
+        // check all hal functions are supported
+        validationError = validateRequiredHal(contentAsJson);
+        if (validationError) {
+            return validationError;
+        }
+
         // extract script
         var script = contentAsJson.document
             .installationScript[0]
@@ -47,9 +53,6 @@ function validateAndSaveScriptFrom(filePath) {
         if (validationError) {
             return validationError;
         }
-
-        // TODO check all hal functions are supported
-        // TODO check script executing is safe for system
 
         // uploaded script is valid and can be executed -> save it
         var scriptName = contentAsJson.document
@@ -111,6 +114,28 @@ function parseXml(xml) {
     });
 
     return contentAsJson;
+}
+
+function validateRequiredHal(contentAsJson) {
+    var supportedFunctions = fs.readFileSync(applicationConstants.SUPPORTED_HAL_PATH, 'utf8')
+        .trim()
+        .split(/,\s*/);
+
+    var unsupportedFunctions = [];
+
+    contentAsJson.document
+        .installationScript[0]
+        .requiredHalFunctions[0]
+        .function
+        .forEach(requaredFunction => {
+            if (supportedFunctions.indexOf(requaredFunction) === -1) {
+                unsupportedFunctions.push(requaredFunction);
+            }
+        });
+
+    if (unsupportedFunctions.length > 0) {
+        return "Functions '" + unsupportedFunctions + "' are not supported.";
+    }
 }
 
 function validateScriptSyntax(script) {
