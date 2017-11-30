@@ -2,6 +2,9 @@
 <document>
     <installationScript>
         <scriptName>script1</scriptName>
+        <requiredHalFunctions>
+            <function>do1</function>
+        </requiredHalFunctions>
         <script>
 var i;
 for (i = 0; i &lt; 5; i++){
@@ -9,7 +12,7 @@ for (i = 0; i &lt; 5; i++){
 }
 hal.do1();
 // hal.do3(); // this function does not exist
-hal.do2();
+//hal.do2();
         </script>
     </installationScript>
 </document>

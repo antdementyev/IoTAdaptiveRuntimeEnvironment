@@ -2,6 +2,12 @@
 <document>
   <installationScript>
     <scriptName>script1</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+      <function>do2</function>
+      <function>do3</function>
+      <function>getTemperature</function>
+    </requiredHalFunctions>
     <script>&#xD;
 var i;&#xD;
 for (i = 0; i &lt; 5; i++) {&#xD;
@@ -14,6 +20,6 @@ hal.do2();&#xD;
   </installationScript>
   <scriptProvider>
     <name>ScriptProvider</name>
-    <signature>VbhdfC20WIgXrYYZfqzsyQQaBrVsWfBljhb1VFsLDAcG26X9wlGk0wVmDzBzJCF5WBKcsWdj87nhmHNFunpv3Zeg/tvn6SkSWfVrhysIgBV1VOwaXF+7aXUcCifi9oxQWt3sCAD7FQGg7n1c80LYZZr/oog8kqOqGWEWMo8dXTg=</signature>
+    <signature>UKLiVQH/jM08SQt8SMMYbvk/ApreFHbnKQbu6juOkPJyr32NW40Agz6sONJIgf9BhVr46Z+yWvvzMkboEfGuhgsNoCIQzgaMaP/c+okyYOpimOOLVmyb3rDRgpQ5Bom7BWPwG5hpgnTasJmUXAb37c14VnbQ3z74Su80CDGf0DI=</signature>
   </scriptProvider>
 </document>

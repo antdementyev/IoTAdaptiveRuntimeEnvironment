@@ -2,6 +2,9 @@
 <document>
   <installationScript>
     <scriptName>script1</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+    </requiredHalFunctions>
     <script>&#xD;
 var i;&#xD;
 for (i = 0; i &lt; 5; i++){&#xD;
@@ -9,11 +12,11 @@ for (i = 0; i &lt; 5; i++){&#xD;
 }&#xD;
 hal.do1();&#xD;
 // hal.do3(); // this function does not exist&#xD;
-hal.do2();&#xD;
+//hal.do2();&#xD;
         </script>
   </installationScript>
   <scriptProvider>
     <name>ScriptProvider</name>
-    <signature>TyRmcUjugmCk+x49q/3t514Pqi1jsSXjfUJDaRN8uDquejulH1f4UMtdWsnErCwpNhgP+UJ8a2ZEpxt2i9MuM8mZFPcu33va5CuRxGhRpyDFDJEZzU8kJq10WUkPfkcQjkERvkR6RpjiujyTbj6lxMozqRh+YrQPty16bq7pbY=</signature>
+    <signature>NgcW4hnRhYg/avbHDWKQWWQiYsSTSHsO+uFYSEktVFJIFgsZFV/vbymZd7ku+C07zrPLdlp2VSyG9fOZDfNAnbtEaq5P7AYCZvhqX3LkK4+GQeJrwXWYwnVqPRXFvjw8gQMI/8w2hJarVylTR6xt2k34xfvCGjFn3WkzwqG7+Rk=</signature>
   </scriptProvider>
 </document>

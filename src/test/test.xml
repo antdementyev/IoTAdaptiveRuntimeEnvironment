@@ -2,18 +2,22 @@
 <document>
   <installationScript>
     <scriptName>script</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+      <function>do2</function>
+    </requiredHalFunctions>
     <script>&#xD;
 var i;&#xD;
 for (i = 0; i &lt; 3; i++) {&#xD;
     console.log("Im from xml");&#xD;
 }&#xD;
-//hal.do1();&#xD;
+hal.do1();&#xD;
 // hal.do3(); // this function does not exist&#xD;
 hal.do2();&#xD;
         </script>
   </installationScript>
   <scriptProvider>
     <name>ScriptProvider</name>
-    <signature>rC7AIgHcQMhOsLwR/HVdur1KeJwwuVpKmUWd8Yy4W3uMkz9RvhnQtYMpQMVh5Fh283zQUOJJVOxdZmzdPbCOcebBOupiG2IwNL/2ntUz418HXNnbjT0Ocgdx4MjlpPn74N8JrUr40SM/S595vcJbHN3KXfn/qr1a+rsRd5eZSe4=</signature>
+    <signature>EDzH+1zTAhP7E0OMqmvy7reAMN6/CbjWcVaQJQB+5W7MWYgwyrZc4eN+XGfymy0w6/grK4OMHv1wZ09FKlN9x77u9eP9NmIq5QnK3PEdzP6hvqv9As+TfOgHw5nmajihzA2qzT4AA1MW9LjgGx9bWoRw5+NmP8HRnnhwQvIQWIA=</signature>
   </scriptProvider>
 </document>

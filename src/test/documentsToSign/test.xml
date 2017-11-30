@@ -2,12 +2,16 @@
 <document>
     <installationScript>
         <scriptName>script</scriptName>
+        <requiredHalFunctions>
+            <function>do1</function>
+            <function>do2</function>
+        </requiredHalFunctions>
         <script>
 var i;
 for (i = 0; i &lt; 3; i++) {
     console.log(&quot;Im from xml&quot;);
 }
-//hal.do1();
+hal.do1();
 // hal.do3(); // this function does not exist
 hal.do2();
         </script>

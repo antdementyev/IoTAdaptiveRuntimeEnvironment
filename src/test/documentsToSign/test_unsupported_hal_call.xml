@@ -2,6 +2,12 @@
 <document>
 <installationScript>
     <scriptName>script1</scriptName>
+    <requiredHalFunctions>
+        <function>do1</function>
+        <function>do2</function>
+        <function>do3</function>
+        <function>getTemperature</function>
+    </requiredHalFunctions>
     <script>
 var i;
 for (i = 0; i &lt; 5; i++) {

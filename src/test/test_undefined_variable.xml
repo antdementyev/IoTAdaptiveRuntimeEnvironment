@@ -2,6 +2,10 @@
 <document>
   <installationScript>
     <scriptName>script1</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+      <function>do2</function>
+    </requiredHalFunctions>
     <script>&#xD;
     var i;&#xD;
     for (i = 0; i &lt; 5; i++) {&#xD;
@@ -15,6 +19,6 @@
   </installationScript>
   <scriptProvider>
     <name>ScriptProvider</name>
-    <signature>BVeIMopy6sRKJCcYOnEThambm+4yrbtC4gFYJyHT5HO8mHXOCUtvrJy9NZ9xrvcHdsUrWJMB5O364RRgEirpdZaxYcx6xZQgOsagqsgygm2ZdJBrvBWG732y0QDGFc1v7qenXnHZFybnCXqb5qOL2yOe2Hv840m2VXSLK68O1Hc=</signature>
+    <signature>lFhmXELnrFaMHlB1Q5t1BhI8+VXMcHJ4xF/YMKcGvyfvPIeEeKJuDOWDbOMn1xpoe0kdlrrFeeJiYsz7HeINTFxc6ur/2TKd2Q4a0p2GKwBHn81BktOaNlUSF6290+tCtPha+hhCvOXyEMojqEKgILANZ9jQZ6lFc/jpcuMo4ek=</signature>
   </scriptProvider>
 </document>
