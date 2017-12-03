@@ -15,5 +15,6 @@ module.exports = {
 
     SCRIPTS_DIRECTORY : "./scripts/",
 
-    SUPPORTED_HAL_PATH : "./hal/supportedFunctions"
+    SUPPORTED_HAL_PATH : "./hal/supportedFunctions",
+    HAL_PATH : "./hal/hal.js"
 }

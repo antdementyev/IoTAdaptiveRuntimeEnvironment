@@ -6,6 +6,7 @@ var exec = require("child_process").execSync;
 
 var applicationConstants = require("../../configuration/applicationConstants");
 var signatureValidator = require("./rsa/signatureValidator");
+var scriptManager = require("../scriptManager/scriptManager");
 
 
 /**
@@ -54,14 +55,13 @@ function validateAndSaveScriptFrom(filePath) {
             return validationError;
         }
 
-        // uploaded script is valid and can be executed -> save it
+        // uploaded script is valid and can be saved
         var scriptName = contentAsJson.document
             .installationScript[0]
             .scriptName[0]
             .toString("utf8")
             .trim();
-        var scriptPath = saveScript(applicationConstants.SCRIPTS_DIRECTORY, scriptName, script);
-        console.info("Saved new script: " + scriptPath);
+        scriptManager.installNewScript(scriptName, script);
 
     } catch (error) {
         console.error("Exception while upload file validation: " + error);
@@ -138,9 +138,11 @@ function validateRequiredHal(contentAsJson) {
     }
 }
 
-function validateScriptSyntax(script) {
+function validateScriptSyntax(scriptContent) {
     // need to save script at first to be able to validate it with jshint
-    var scriptPath = saveScript(applicationConstants.UPLOAD_DIRECTORY, "script", script);
+    var scriptPath = applicationConstants.UPLOAD_DIRECTORY + "script" + ".js";
+    fs.writeFileSync(scriptPath, scriptContent);
+
     var validationError = validateScript(scriptPath);
     if (validationError) {
         fs.unlinkSync(scriptPath);
@@ -166,12 +168,6 @@ function validateScript(scriptPath) {
             .replace(/(\r\n|\n|\r)/gm, " ")      // output to one line
             .replace(/\s+/g, " ");               // remove double white spaces
     }
-}
-
-function saveScript(directory, scriptName, scriptContent) {
-    var scriptPath = directory + scriptName + ".js";
-    fs.writeFileSync(scriptPath, scriptContent);
-    return scriptPath;
 }
 
 function extractStringFirstLine(object) {
