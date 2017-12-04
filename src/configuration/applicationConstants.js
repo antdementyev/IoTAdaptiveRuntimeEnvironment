@@ -15,6 +15,10 @@ module.exports = {
 
     SCRIPTS_DIRECTORY : "./scripts/",
 
+    // HAL
     SUPPORTED_HAL_PATH : "./hal/supportedFunctions",
-    HAL_PATH : "./hal/hal.js"
+    HAL_PATH : "./hal/hal.js",
+
+    // scriptExecuter
+    SCRIPT_EXECUTER : "./operating/scriptManager/scriptExecuter.js"
 }
