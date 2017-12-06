@@ -46,7 +46,6 @@ function runScript(scriptPath, scriptContent) {
     });
 
     worker.on("exit", (code, signal) => {
-        console.info("Finished script executing " + scriptPath);
         if (signal) {
             // ok, worker was killed by signal
         } else if (code !== 0) {
@@ -56,6 +55,7 @@ function runScript(scriptPath, scriptContent) {
         } else {
             // worker success
         }
+        console.info("Finished script executing " + scriptPath);
         console.info("Installed scripts: " + util.inspect(installedScripts));
     });
 
@@ -85,4 +85,10 @@ function updateScriptStatus(scriptPath, status) {
     }
 }
 
+function getStatusInstalledScripts() {
+    return util.inspect(installedScripts)
+        .toString();
+}
+
 exports.installNewScript = installNewScript;
+exports.getStatusInstalledScripts = getStatusInstalledScripts;

@@ -2,6 +2,7 @@ var fs = require("fs");
 var formidable = require("formidable");
 var uploadFileValidator = require("../operating/validation/uploadFileValidator");
 var applicationConstants = require("../configuration/applicationConstants");
+var scriptManager = require("../operating/scriptManager/scriptManager");
 
 
 function getHandler(request) {
@@ -10,6 +11,9 @@ function getHandler(request) {
     }
     if (request.url == "/upload" && request.method == 'POST') {
         return onUpload;
+    }
+    if (request.url == "/status" && request.method == 'GET') {
+        return onStatus;
     }
     return null;
 }
@@ -24,6 +28,11 @@ function onStart(response) {
             writeResponse(response, 200, html);
         }
     });
+}
+
+function onStatus(response) {
+    console.info("Called status");
+    writeResponse(response, 200, scriptManager.getStatusInstalledScripts());
 }
 
 function onUpload(response, request) {
@@ -56,8 +65,9 @@ function onUpload(response, request) {
             console.warn(message);
             writeResponse(response, 400, message);
         } else {
-            var message = "Script successful uploaded";
+            var message = "Script successful uploaded.";
             console.info(message);
+            message += " Installed scripts: " + scriptManager.getStatusInstalledScripts();
             writeResponse(response, 200, message);
         }
 
