@@ -23,10 +23,10 @@ function runScript(scriptPath, scriptContent) {
         return;
     }
 
-    stopRunningScripts();
-
     // update list of scripts
-    installedScripts.unshift({ scriptPath : scriptPath, status : ScriptStatus.RUNNING });   // add to the first position
+    stopRunningScripts();
+    setScriptToRun(scriptPath);
+
     console.info("Installed scripts: " + util.inspect(installedScripts));
 
     // setup running
@@ -76,6 +76,19 @@ function stopRunningScripts() {
     });
 }
 
+function setScriptToRun(scriptPath) {
+    // update state if script is already known
+    for (var i = 0; i < installedScripts.length; i++) {
+        if (installedScripts[i].scriptPath === scriptPath) {
+            installedScripts[i].status = ScriptStatus.RUNNING;
+            return;
+        }
+    }
+
+    // current script is new, add it to list
+    installedScripts.unshift({ scriptPath : scriptPath, status : ScriptStatus.RUNNING });   // add to the first position
+}
+
 function updateScriptStatus(scriptPath, status) {
     for (var i = 0; i < installedScripts.length; i++) {
         if (installedScripts[i].scriptPath === scriptPath) {
@@ -86,9 +99,31 @@ function updateScriptStatus(scriptPath, status) {
 }
 
 function getStatusInstalledScripts() {
-    return util.inspect(installedScripts)
-        .toString();
+    return "Installed scripts: " + util.inspect(installedScripts).toString();
+}
+
+function runScriptByName(scriptNameToRun) {
+    // check required script exists
+    var scriptPath = null;
+    for (var i = 0; i < installedScripts.length; i++) {
+        var path = installedScripts[i].scriptPath
+            .split("/");
+        var scriptName = path[path.length - 1];
+        if (scriptNameToRun === scriptName) {
+            scriptPath = installedScripts[i].scriptPath;
+            break;
+        }
+    }
+    if (scriptPath === null) {
+        return "Unknown script name.";
+    }
+
+    // run script
+    var scriptContent = fs.readFileSync(scriptPath, "utf8");
+    runScript(scriptPath, scriptContent);
+    return "Run '" + scriptPath + "'. " + getStatusInstalledScripts();
 }
 
 exports.installNewScript = installNewScript;
 exports.getStatusInstalledScripts = getStatusInstalledScripts;
+exports.runScriptByName = runScriptByName;

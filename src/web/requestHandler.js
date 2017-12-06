@@ -1,20 +1,26 @@
 var fs = require("fs");
 var formidable = require("formidable");
+var url = require('url');
+
 var uploadFileValidator = require("../operating/validation/uploadFileValidator");
 var applicationConstants = require("../configuration/applicationConstants");
 var scriptManager = require("../operating/scriptManager/scriptManager");
 
 
 function getHandler(request) {
-    if (request.url == "/" && request.method == 'GET') {
+    if (request.url === "/" && request.method === 'GET') {
         return onStart;
     }
-    if (request.url == "/upload" && request.method == 'POST') {
+    if (request.url === "/upload" && request.method === 'POST') {
         return onUpload;
     }
-    if (request.url == "/status" && request.method == 'GET') {
+    if (request.url === "/status" && request.method === 'GET') {
         return onStatus;
     }
+    if (request.url.startsWith("/run") && request.method === 'GET') {
+        return onRun;
+    }
+
     return null;
 }
 
@@ -33,6 +39,14 @@ function onStart(response) {
 function onStatus(response) {
     console.info("Called status");
     writeResponse(response, 200, scriptManager.getStatusInstalledScripts());
+}
+
+function onRun(response, request) {
+    var scriptName = url.parse(request.url, true)
+        .path
+        .split("/")[2];
+    var status = scriptManager.runScriptByName(scriptName);
+    writeResponse(response, 200, status);
 }
 
 function onUpload(response, request) {
