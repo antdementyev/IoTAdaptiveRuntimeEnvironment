@@ -1,0 +1,1 @@
+while (true) {hal.do1();}

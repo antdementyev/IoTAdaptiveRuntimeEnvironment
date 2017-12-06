@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>do1</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+hal.do1();&#xD;
+        </script>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>GgoMcLjTgMYML1tHyV/WaYPfKjeni9Ag9NaiKnMceKCdF94QJs40rAW9UN9VVhfSfwbsWgqoM5PkY/HDuYNSOZnx6yyC+3vvjoI3Rf7AJgUxKXkxFsKPuX36RpGvH5TFk8uk4Wp9N6b37A0adX0lYXa9Yzs9G7v5j2x8s1mPWlA=</signature>
+  </scriptProvider>
+</document>

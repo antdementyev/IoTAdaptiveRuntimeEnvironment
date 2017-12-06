@@ -1,5 +1,6 @@
 var fs = require('fs');
 var cluster = require('cluster');
+var util = require('util');
 
 var applicationConstants = require("../../configuration/applicationConstants");
 
@@ -18,53 +19,53 @@ function installNewScript(scriptName, scriptContent) {
 }
 
 function runScript(scriptPath, scriptContent) {
-
     if (!cluster.isMaster) {
         return;
     }
 
     stopRunningScripts();
+
     // update list of scripts
     installedScripts.unshift({ scriptPath : scriptPath, status : ScriptStatus.RUNNING });   // add to the first position
+    console.info("Installed scripts: " + util.inspect(installedScripts));
 
     // setup running
-    cluster.setupMaster({
-        exec: applicationConstants.SCRIPT_EXECUTER,
-        // args: process.argv.slice(2),
-        silent: false
+    cluster.setupMaster({ exec: applicationConstants.SCRIPT_EXECUTER });
+
+    // start script executer in new process
+    var worker = cluster.fork();
+    worker.on("online", () => {
+        console.log("Start executing '" + scriptPath + "'");
     });
 
-    //This will be fired when the forked process becomes online
-    cluster.on("online", function(worker) {
-        console.log("starte worker " + worker.process.pid);
-
-        worker.on("message", function(msg) {
-            console.log(msg);
-            worker.destroy(); //Don't leave him hanging
-        });
-
-        worker.on('exit', (code, signal) => {
-            console.log("worker is died " + worker.process.pid);
-            if (signal) {
-                console.log(`worker was killed by signal: ${signal}`);
-            } else if (code !== 0) {
-                console.log(`worker exited with error code: ${code}`);
-            } else {
-                console.log('worker success!');
-            }
-            console.log(worker.isDead());
-        });
-
-        //Send the code to run for the worker
-        worker.send(scriptContent);
+    worker.on("message", (msg) => {
+        // worker finished, update list of scripts
+        console.info("Script '" + scriptPath + "' finished.");
+        updateScriptStatus(scriptPath, ScriptStatus.WAITING);
+        worker.destroy();   // don't leave worker hanging
     });
 
-    cluster.fork();
+    worker.on("exit", (code, signal) => {
+        console.info("Finished script executing " + scriptPath);
+        if (signal) {
+            // ok, worker was killed by signal
+        } else if (code !== 0) {
+            // error while script executing
+            console.error("Error while executing of script " + scriptPath);
+            updateScriptStatus(scriptPath, ScriptStatus.ERROR);
+        } else {
+            // worker success
+        }
+        console.info("Installed scripts: " + util.inspect(installedScripts));
+    });
+
+    worker.send(scriptContent);
 }
 
 function stopRunningScripts() {
     for (var id in cluster.workers) {
         cluster.workers[id].process.kill();
+        cluster.workers[id].kill();
     }
 
     // update list of scripts
@@ -73,6 +74,15 @@ function stopRunningScripts() {
             scriptEntry.status = ScriptStatus.WAITING;
         }
     });
+}
+
+function updateScriptStatus(scriptPath, status) {
+    for (var i = 0; i < installedScripts.length; i++) {
+        if (installedScripts[i].scriptPath === scriptPath) {
+            installedScripts[i].status = status;
+            break;
+        }
+    }
 }
 
 exports.installNewScript = installNewScript;

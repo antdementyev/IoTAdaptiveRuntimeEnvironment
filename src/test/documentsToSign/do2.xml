@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+    <installationScript>
+        <scriptName>do2</scriptName>
+        <requiredHalFunctions>
+            <function>do2</function>
+        </requiredHalFunctions>
+        <script>
+hal.do2();
+        </script>
+    </installationScript>
+</document>

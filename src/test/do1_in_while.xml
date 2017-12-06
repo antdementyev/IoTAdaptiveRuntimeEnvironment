@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>do1_in_while</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+while (true) {hal.do1();}&#xD;
+        </script>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>meFKS0bTeLoZJEvOPJv3klxOgDQKjilaPxFhbO6QEK6Y50J414CtHQqf7fTjZaohRlTyl5o5lPDD8UaroqOKYVKd3OkOdFiIxZq5wYxBwhyPNY1ZEDG2i0mDNe07DhnwIxhSJY34JxS5wgT2LGQOGLjHA3j6eX9MhqNiRjs+xxo=</signature>
+  </scriptProvider>
+</document>

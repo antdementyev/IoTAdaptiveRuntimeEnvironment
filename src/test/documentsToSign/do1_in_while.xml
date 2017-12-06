@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+    <installationScript>
+        <scriptName>do1_in_while</scriptName>
+        <requiredHalFunctions>
+            <function>do1</function>
+        </requiredHalFunctions>
+        <script>
+while (true) {hal.do1();}
+        </script>
+    </installationScript>
+</document>
