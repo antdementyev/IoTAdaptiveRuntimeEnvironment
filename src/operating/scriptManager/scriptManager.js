@@ -39,24 +39,26 @@ function runScript(scriptPath, scriptContent) {
     });
 
     worker.on("message", (msg) => {
-        // worker finished, update list of scripts
-        console.info("Script '" + scriptPath + "' finished.");
-        updateScriptStatus(scriptPath, ScriptStatus.WAITING);
-        worker.destroy();   // don't leave worker hanging
+        // worker finished, don't leave worker hanging
+        worker.destroy();
     });
 
     worker.on("exit", (code, signal) => {
+        var newScriptStatus;
         if (signal) {
             // ok, worker was killed by signal
+            newScriptStatus = ScriptStatus.WAITING
         } else if (code !== 0) {
             // error while script executing
             console.error("Error while executing of script " + scriptPath);
-            updateScriptStatus(scriptPath, ScriptStatus.ERROR);
+            newScriptStatus = ScriptStatus.ERROR
         } else {
             // worker success
+            newScriptStatus = ScriptStatus.WAITING
         }
         console.info("Finished script executing " + scriptPath);
-        console.info("Installed scripts: " + util.inspect(installedScripts));
+        updateScriptStatus(scriptPath, newScriptStatus);
+        console.info(getStatusInstalledScripts());
     });
 
     worker.send(scriptContent);
@@ -124,6 +126,14 @@ function runScriptByName(scriptNameToRun) {
     return "Run '" + scriptPath + "'. " + getStatusInstalledScripts();
 }
 
+function stop() {
+    stopRunningScripts();
+    var installedScriptsStatus = getStatusInstalledScripts();
+    console.info(installedScriptsStatus);
+    return installedScriptsStatus;
+}
+
 exports.installNewScript = installNewScript;
 exports.getStatusInstalledScripts = getStatusInstalledScripts;
 exports.runScriptByName = runScriptByName;
+exports.stop = stop;

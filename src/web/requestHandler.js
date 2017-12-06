@@ -20,6 +20,9 @@ function getHandler(request) {
     if (request.url.startsWith("/run") && request.method === 'GET') {
         return onRun;
     }
+    if (request.url === "/stop" && request.method === 'GET') {
+        return onStop;
+    }
 
     return null;
 }
@@ -42,11 +45,17 @@ function onStatus(response) {
 }
 
 function onRun(response, request) {
+    console.info("Called run");
     var scriptName = url.parse(request.url, true)
         .path
         .split("/")[2];
     var status = scriptManager.runScriptByName(scriptName);
     writeResponse(response, 200, status);
+}
+
+function onStop(response) {
+    console.info("Called stop");
+    writeResponse(response, 200, scriptManager.stop());
 }
 
 function onUpload(response, request) {
