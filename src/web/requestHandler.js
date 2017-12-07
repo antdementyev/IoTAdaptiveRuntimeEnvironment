@@ -50,6 +50,7 @@ function onRun(response, request) {
         .path
         .split("/")[2];
     var status = scriptManager.runScriptByName(scriptName);
+    status += " " + scriptManager.getStatusInstalledScripts();
     writeResponse(response, 200, status);
 }
 
@@ -88,9 +89,9 @@ function onUpload(response, request) {
             console.warn(message);
             writeResponse(response, 400, message);
         } else {
-            var message = "Script successful uploaded.";
+            var message = "Script successful uploaded. ";
             console.info(message);
-            message += " Installed scripts: " + scriptManager.getStatusInstalledScripts();
+            message += scriptManager.getStatusInstalledScripts();
             writeResponse(response, 200, message);
         }
 

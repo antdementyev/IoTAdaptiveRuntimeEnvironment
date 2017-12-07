@@ -56,12 +56,10 @@ function validateAndSaveScriptFrom(filePath) {
         }
 
         // uploaded script is valid and can be saved
-        var scriptName = contentAsJson.document
-            .installationScript[0]
-            .scriptName[0]
-            .toString("utf8")
-            .trim();
-        scriptManager.installNewScript(scriptName, script);
+        var installationError = scriptManager.installNewScript(filePath);
+        if (installationError) {
+            return installationError;
+        }
 
     } catch (error) {
         console.error("Exception while upload file validation: " + error);
