@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <document>
     <installationScript>
-        <scriptName>do1_in_while</scriptName>
+        <scriptName>do1_errorTesting</scriptName>
         <requiredHalFunctions>
             <function>do1</function>
         </requiredHalFunctions>
         <script>
-            while (true) {hal.do1();}
+            hal.do1();
         </script>
-        <test>   
+        <test>
+            var temperature = hal.getTemperature();
+            assert(temperature &lt; 0 &amp;&amp; temperature &gt; 50, "Error while reading temperature.");
         </test>
     </installationScript>
 </document>

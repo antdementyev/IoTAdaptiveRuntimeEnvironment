@@ -6,7 +6,11 @@
             <function>do2</function>
         </requiredHalFunctions>
         <script>
-hal.do2();
+            hal.do2();
         </script>
+        <test>
+            var temperature = hal.getTemperature();
+            assert(temperature &gt; 0 &amp;&amp; temperature &lt; 50, "Error while reading temperature.");
+        </test>
     </installationScript>
 </document>
