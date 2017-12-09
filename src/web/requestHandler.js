@@ -75,7 +75,11 @@ function onUpload(response, request) {
 
     // parse uploaded file
     var form = new formidable.IncomingForm();
-    form.uploadDir = applicationConstants.UPLOAD_DIRECTORY;
+    var uploadDir = applicationConstants.UPLOAD_DIRECTORY;
+    form.uploadDir = uploadDir;
+    if (!fs.existsSync(uploadDir)){
+        fs.mkdirSync(uploadDir);
+    }
     form.keepExtensions = true;
     form.parse(request, function(error, fields, files) {
         if (error) {
