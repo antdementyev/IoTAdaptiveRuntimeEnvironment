@@ -49,9 +49,12 @@ function onRun(response, request) {
     var scriptName = url.parse(request.url, true)
         .path
         .split("/")[2];
-    var status = scriptManager.runScriptByName(scriptName);
-    status += " " + scriptManager.getStatusInstalledScripts();
-    writeResponse(response, 200, status);
+    var runErrors = scriptManager.runScriptByName(scriptName);
+    if (runErrors) {
+        writeResponse(response, 500, runErrors);
+    } else {
+        writeResponse(response, 200, scriptManager.getStatusInstalledScripts());
+    }
 }
 
 function onStop(response) {

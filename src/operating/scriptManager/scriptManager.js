@@ -25,7 +25,7 @@ function installNewScript(uploadedFilePath) {
 }
 
 /**
- *  Tests the given script and runs it if the test were successful.
+ *  Tests the given script and runs it if the tests were successful.
  *  Otherwise returns test errors.
  */
 function runScript(nameTestScript) {
@@ -42,7 +42,7 @@ function runScript(nameTestScript) {
         return "Error while running test: " + testErrors;
     }
 
-    // tests are successful. run script
+    // tests are successful. stop all previous scripts and run the new script
     // update list of scripts
     stopRunningScripts();
     updateScriptStatus(scriptName, ScriptStatus.RUNNING);
@@ -71,15 +71,26 @@ function runScript(nameTestScript) {
             newScriptStatus = ScriptStatus.WAITING
         } else if (code !== 0) {
             // error while script executing
-            console.error("Error while executing of script " + scriptName);
+            console.error("Error while executing of script '" + scriptName + "'");
             newScriptStatus = ScriptStatus.ERROR
         } else {
             // worker success
             newScriptStatus = ScriptStatus.WAITING
         }
-        console.info("Finished script executing " + scriptName);
+        console.info("Finished script executing '" + scriptName + "'");
         updateScriptStatus(scriptName, newScriptStatus);
         console.info(getStatusInstalledScripts());
+
+        // in case of executing error try to start a previous script
+        if (newScriptStatus === ScriptStatus.ERROR) {
+            console.info("Error handling: try to start a previous script.");
+            var isFallbackSuccessful = startPreviousScript();
+            if (!isFallbackSuccessful) {
+                console.warn("Error handling: Cannot start a previous script.");
+            } else {
+                console.info("Error handling: started a previous script.");
+            }
+        }
     });
 
     worker.send(nameTestScript[2]);
@@ -113,19 +124,45 @@ function stopRunningScripts() {
 }
 
 function updateScriptStatus(scriptName, status) {
+    // find the specified script at the list
+    var script = null;
     for (var i = 0; i < installedScripts.length; i++) {
         if (installedScripts[i].scriptName === scriptName) {
-            installedScripts[i].status = status;
-            return;
+            script = installedScripts[i];
+            break;
         }
     }
 
-    // current script is new, add it to list
-    installedScripts.unshift({ scriptName : scriptName, status : status });   // add to the first position
+    if (script !== null) {
+        // if current script must not be ran, just update its status
+        if (status !== ScriptStatus.RUNNING) {
+            script.status = status;
+            return;
+        }
+        // the scpecified script must rerun, remove it to have running scripts always at first position at the list
+        installedScripts.splice(installedScripts.indexOf(script), 1);
+    }
+
+    // add to the first position
+    installedScripts.unshift({ scriptName : scriptName, status : status });
 }
 
 function getStatusInstalledScripts() {
     return "Installed scripts: " + util.inspect(installedScripts).toString();
+}
+
+function startPreviousScript() {
+    // start a previous script with the sucessful last executing
+    for (var i = 0; i < installedScripts.length; i++) {
+        if (installedScripts[i].status === ScriptStatus.WAITING) {
+            var errorsScriptRunning = runScriptByName(installedScripts[i].scriptName);
+            if (!errorsScriptRunning) {
+                return true;
+            }
+            // starting of a previuos script failed. Try a next one.
+        }
+    }
+    return false;
 }
 
 function runScriptByName(scriptNameToRun) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>do1_errorExecuting</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+            hal.do1();&#xD;
+            throw new Error("any error while script executing.");&#xD;
+        </script>
+    <test>&#xD;
+            var temperature = hal.getTemperature();&#xD;
+            assert(temperature &gt; 0 &amp;&amp; temperature &lt; 50, "Error while reading temperature.");&#xD;
+        </test>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>ag/Wp3f6TH97zOiwc1dl9bEe6ssxO21RV1+n4LfATFXWolKdfvZI46/nWmaMxGzwnZQxDIOm8Tumt78kLyq+hNfm6jMkfRZodxNcAUyWwZHqveU0Pu/et3q6D6XORVgooPSMR+rtvRzS2xDtgVLmf+crMQ+YATWaEu1m+G37Bgo=</signature>
+  </scriptProvider>
+</document>
