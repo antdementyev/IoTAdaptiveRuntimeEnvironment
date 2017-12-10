@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+    <installationScript>
+        <scriptName>do3_do4_periodically_do1_throwError</scriptName>
+        <requiredHalFunctions>
+            <function>do1</function>
+            <function>do3</function>
+            <function>do4</function>
+        </requiredHalFunctions>
+        <script>&#xD;
+              hal.do1();&#xD;
+  &#xD;
+              var timeToThrowError = new Date().getTime() + 10 * 1000;&#xD;
+              while (true) {&#xD;
+                  hal.do3();&#xD;
+                  sleep(1000);&#xD;
+                  hal.do4();&#xD;
+                  sleep(1000);&#xD;
+                  if (new Date().getTime() &gt; timeToThrowError) {&#xD;
+                      throw new Error("Any error while script running.");&#xD;
+                  }&#xD;
+              }&#xD;
+  &#xD;
+              function sleep(milliSeconds) {&#xD;
+                  var startTime = new Date().getTime();&#xD;
+                  while (new Date().getTime() &lt; startTime + milliSeconds);&#xD;
+              }&#xD;
+        </script>
+        <test>
+            var temperature = hal.getTemperature();
+            assert(temperature &gt; 0 &amp;&amp; temperature &lt; 50, "Error while reading temperature.");
+        </test>
+    </installationScript>
+</document>
