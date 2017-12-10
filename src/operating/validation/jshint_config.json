@@ -1,7 +1,7 @@
 {
   "undef": true,
+  "node" : true,
   "globals": {
-      "console": true,
       "hal": true
-    }
+  }
 }

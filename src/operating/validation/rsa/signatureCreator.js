@@ -5,8 +5,8 @@ var xml2js = require('xml2js');
 var util = require('util');
 var appConstants = require("../../../configuration/applicationConstants");
 
-const docsToSingFolder = "../../../test/documentsToSign/";
-const signedDocsFolder = "../../../test/";
+const docsToSingFolder = "../../../testDocuments/documentsToSign/";
+const signedDocsFolder = "../../../testDocuments/";
 
 
 // add a sign node to the root node for each file in folder

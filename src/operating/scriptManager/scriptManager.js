@@ -18,7 +18,11 @@ function installNewScript(uploadedFilePath) {
     var nameTestScript = extractNameTestScript(uploadedFilePath);
 
     // save (copy) given script
-    var pathToSave = applicationConstants.SCRIPTS_DIRECTORY + nameTestScript[0] + ".xml";
+    var scriptDir = applicationConstants.SCRIPTS_DIRECTORY;
+    if (!fs.existsSync(scriptDir)){
+        fs.mkdirSync(scriptDir);
+    }
+    var pathToSave = scriptDir + nameTestScript[0] + ".xml";
     fs.copyFileSync(uploadedFilePath, pathToSave);
     console.info("Saved new script: " + pathToSave);
 

@@ -6,6 +6,10 @@ function do2() {
     console.info("do2");
 }
 
+function do3() {
+    console.info("do3");
+}
+
 function goToSafeState() {
     console.info("goToSafeState");
 }
@@ -18,5 +22,6 @@ function getTemperature() {
 
 exports.do1 = do1;
 exports.do2 = do2;
+exports.do3 = do3;
 exports.goToSafeState = goToSafeState;
 exports.getTemperature = getTemperature;

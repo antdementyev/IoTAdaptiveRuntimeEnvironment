@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>unsupportedFunction</scriptName>
+    <requiredHalFunctions>
+      <function>notExistFunction</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+            hal.notExistFunction();&#xD;
+        </script>
+    <test>&#xD;
+        </test>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>jPC056x3jzwwC0KB1dG6Xm6VHS4xCNN61Dw71Ru5iTwIaaPU0qzAt7c5yCRjc0B3I5EIp/sDhjBN/4C7z5aBXk+KstMN0hcSUjMx4CFPkJ2NpwtYnV6LdRznPNhVZ3F9yAOlCJ4VI7N5KRx8d2kNBTXgMz+jOcbFF4X1wa1LBaY=</signature>
+  </scriptProvider>
+</document>

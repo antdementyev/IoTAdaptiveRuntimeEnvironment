@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+    <installationScript>
+        <scriptName>do1_do2_periodically</scriptName>
+        <requiredHalFunctions>
+            <function>do1</function>
+            <function>do2</function>
+        </requiredHalFunctions>
+        <script>
+            while (true) {
+                hal.do1();
+                sleep(1000);
+                hal.do2();
+                sleep(2000);
+            }
+
+            function sleep(milliSeconds) {
+                var startTime = new Date().getTime();
+                while (new Date().getTime() &lt; startTime + milliSeconds);
+            }
+        </script>
+        <test>
+            var temperature = hal.getTemperature();
+            assert(temperature &gt; 0 &amp;&amp; temperature &lt; 50, "Error while reading temperature.");
+        </test>
+    </installationScript>
+</document>
