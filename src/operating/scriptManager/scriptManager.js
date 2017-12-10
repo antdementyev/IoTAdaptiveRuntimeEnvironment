@@ -128,6 +128,8 @@ function stopRunningScripts() {
             scriptEntry.status = ScriptStatus.WAITING;
         }
     });
+    
+    hal.goToSafeState();
 }
 
 function updateScriptStatus(scriptName, status) {
