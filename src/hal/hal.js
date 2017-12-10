@@ -1,20 +1,31 @@
+var Gpio = require('onoff').Gpio;       // onoff to interact with the GPIO
+var pin4 = new Gpio(4, 'out');          // use a specified output pin
+var pin17 = new Gpio(17, 'out');
+
 function do1() {
+    pin4.writeSync(1);
     console.info("do1");
 }
 
 function do2() {
+    pin4.writeSync(0);
     console.info("do2");
 }
 
 function do3() {
+    pin17.writeSync(1);
     console.info("do3");
 }
 
 function do4() {
+    pin17.writeSync(0);
     console.info("do4");
 }
 
 function goToSafeState() {
+    // Turn LED off
+    pin4.writeSync(0);
+    pin17.writeSync(0);
     console.info("goToSafeState");
 }
 
