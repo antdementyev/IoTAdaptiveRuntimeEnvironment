@@ -1,9 +1,13 @@
 function do1() {
-    console.log("do1");
+    console.info("do1");
 }
 
 function do2() {
-    console.log("do2");
+    console.info("do2");
+}
+
+function goToSafeState() {
+    console.info("goToSafeState");
 }
 
 function getTemperature() {
@@ -14,4 +18,5 @@ function getTemperature() {
 
 exports.do1 = do1;
 exports.do2 = do2;
+exports.goToSafeState = goToSafeState;
 exports.getTemperature = getTemperature;

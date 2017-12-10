@@ -5,6 +5,7 @@ var xml2js = require('xml2js');
 
 var applicationConstants = require("../../configuration/applicationConstants");
 var testRunner = require("./testRunner");
+var hal = require("../../hal/hal");
 
 
 var ScriptStatus = {RUNNING : 1, WAITING : 0, ERROR : -1};
@@ -83,10 +84,12 @@ function runScript(nameTestScript) {
 
         // in case of executing error try to start a previous script
         if (newScriptStatus === ScriptStatus.ERROR) {
-            console.info("Error handling: try to start a previous script.");
+            console.info("Error handling: run the device to the safe state.");
+            hal.goToSafeState();
+            console.info("Error handling: try to start a previous successful script.");
             var isFallbackSuccessful = startPreviousScript();
             if (!isFallbackSuccessful) {
-                console.warn("Error handling: Cannot start a previous script.");
+                console.warn("Error handling: Cannot start any previous successful script. Waiting for new commands.");
             } else {
                 console.info("Error handling: started a previous script.");
             }
