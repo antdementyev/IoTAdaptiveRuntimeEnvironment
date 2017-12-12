@@ -31,8 +31,8 @@ function onStart(response) {
     console.info("Called start");
     fs.readFile("./web/html/start.html", function(error, html) {
         if (error) {
-            writeResponse(response, 500, error);
-            console.error("Could not load the start page.");
+            writeResponse(response, 500, error.toString());
+            console.error("Could not load the start page: " + error.toString());
         } else {
             writeResponse(response, 200, html);
         }
