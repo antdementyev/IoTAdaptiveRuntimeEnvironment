@@ -11,6 +11,7 @@ var hal = require("../../hal/hal");
 var ScriptStatus = {RUNNING : 1, WAITING : 0, ERROR : -1};
 
 var installedScripts = [];
+var timesToRerun;
 
 
 function installNewScript(uploadedFilePath) {
@@ -26,6 +27,7 @@ function installNewScript(uploadedFilePath) {
     fs.copyFileSync(uploadedFilePath, pathToSave);
     console.info("Saved new script: " + pathToSave);
 
+    timesToRerun = applicationConstants.TIMES_SCRIPT_TO_RERUN;
     return runScript(nameTestScript);
 }
 
@@ -86,10 +88,26 @@ function runScript(nameTestScript) {
         updateScriptStatus(scriptName, newScriptStatus);
         console.info(getStatusInstalledScripts());
 
-        // in case of executing error try to start a previous script
+        // in case of executing error
         if (newScriptStatus === ScriptStatus.ERROR) {
+            // go to safe state
             console.info("Error handling: run the device to the safe state.");
             hal.goToSafeState();
+
+            // give the script the second chance, restart
+            while (timesToRerun > 0) {
+                console.info("Error handling: rerun the script. Trying left: " + timesToRerun);
+                timesToRerun--;
+                var errorsScriptRerunning = runScript(nameTestScript);
+                if (!errorsScriptRerunning) {
+                    return;
+                }
+                // restart failed
+                console.info("Error handling: run the device to the safe state.");
+                hal.goToSafeState();
+            }
+
+            // script rerun failed, start a previous one
             console.info("Error handling: try to start a previous successful script.");
             var isFallbackSuccessful = startPreviousScript();
             if (!isFallbackSuccessful) {
@@ -128,7 +146,7 @@ function stopRunningScripts() {
             scriptEntry.status = ScriptStatus.WAITING;
         }
     });
-    
+
     hal.goToSafeState();
 }
 
@@ -194,7 +212,7 @@ function runScriptByName(scriptNameToRun) {
     // run script
     var scriptPath = applicationConstants.SCRIPTS_DIRECTORY + scriptNameToRun + ".xml";
     var nameTestScript = extractNameTestScript(scriptPath);
-    var scriptContent = fs.readFileSync(scriptPath, "utf8");
+    timesToRerun = applicationConstants.TIMES_SCRIPT_TO_RERUN;
     return runScript(nameTestScript);
 }
 

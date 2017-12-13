@@ -20,5 +20,6 @@ module.exports = {
     HAL_PATH : "./hal/hal.js",
 
     // scriptExecuter
-    SCRIPT_EXECUTER : "./operating/scriptManager/scriptExecuter.js"
+    SCRIPT_EXECUTER : "./operating/scriptManager/scriptExecuter.js",
+    TIMES_SCRIPT_TO_RERUN : 1
 }
