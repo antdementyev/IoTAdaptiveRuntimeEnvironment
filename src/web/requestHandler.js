@@ -20,6 +20,9 @@ function getHandler(request) {
     if (request.url.startsWith("/run") && request.method === 'GET') {
         return onRun;
     }
+    if (request.url === "/hal" && request.method === 'GET') {
+        return onHal;
+    }
     if (request.url === "/stop" && request.method === 'GET') {
         return onStop;
     }
@@ -107,6 +110,12 @@ function onUpload(response, request) {
             fs.unlinkSync(uploadedFilePath);
         }
     });
+}
+
+function onHal(response) {
+    console.info("Called hal");
+    var supportedFunctions = fs.readFileSync(applicationConstants.SUPPORTED_HAL_PATH, 'utf8');
+    writeResponse(response, 200, supportedFunctions);
 }
 
 function writeResponse(response, status, body) {
