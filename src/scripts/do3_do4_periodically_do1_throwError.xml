@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>do3_do4_periodically_do1_throwError</scriptName>
+    <requiredHalFunctions>
+      <function>do1</function>
+      <function>do3</function>
+      <function>do4</function>
+    </requiredHalFunctions>
+    <script>&#xD;&#xD;
+              hal.do1();&#xD;&#xD;
+  &#xD;&#xD;
+              var timeToThrowError = new Date().getTime() + 10 * 1000;&#xD;&#xD;
+              while (true) {&#xD;&#xD;
+                  hal.do3();&#xD;&#xD;
+                  sleep(1000);&#xD;&#xD;
+                  hal.do4();&#xD;&#xD;
+                  sleep(1000);&#xD;&#xD;
+                  if (new Date().getTime() &gt; timeToThrowError) {&#xD;&#xD;
+                      throw new Error("Any error while script running.");&#xD;&#xD;
+                  }&#xD;&#xD;
+              }&#xD;&#xD;
+  &#xD;&#xD;
+              function sleep(milliSeconds) {&#xD;&#xD;
+                  var startTime = new Date().getTime();&#xD;&#xD;
+                  while (new Date().getTime() &lt; startTime + milliSeconds);&#xD;&#xD;
+              }&#xD;&#xD;
+        </script>
+    <test>&#xD;
+            var temperature = hal.getTemperature();&#xD;
+            assert(temperature &gt; 0 &amp;&amp; temperature &lt; 50, "Error while reading temperature.");&#xD;
+        </test>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>po3wXeI6kQObbpJiQttkh4wpoclwhdim1bZSHWgNnLwvyC3sTYdQsxSRG2xeUq8T1ndVzWLfNd+Aa2wvSqbpIWa43V20Y0MysxLxo5zR2nb1ZF3G+EnGGeTnQjuJUAmtrFaJOI+4l3gUz/2GkoWc62CN1vgm+4jxkjz4CyzKiRU=</signature>
+  </scriptProvider>
+</document>
