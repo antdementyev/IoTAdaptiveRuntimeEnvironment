@@ -94,6 +94,12 @@ function onUpload(response, request) {
         // validate and save script from file
         var uploadedFilePath = files.upload.path;
         var validationMessage = uploadFileValidator.validateAndSaveScriptFrom(uploadedFilePath);
+
+        // if uploaded script is valid install it
+        if (!validationMessage) {
+            validationMessage = scriptManager.installNewScript(uploadedFilePath);
+        }
+
         if (validationMessage) {
             var message = "Uploaded file is not valid: " + validationMessage;
             console.warn(message);

@@ -6,7 +6,6 @@ var exec = require("child_process").execSync;
 
 var applicationConstants = require("../../configuration/applicationConstants");
 var signatureValidator = require("./rsa/signatureValidator");
-var scriptManager = require("../scriptManager/scriptManager");
 
 
 /**
@@ -53,12 +52,6 @@ function validateAndSaveScriptFrom(filePath) {
         validationError = validateScriptSyntax(script);
         if (validationError) {
             return validationError;
-        }
-
-        // uploaded script is valid and can be saved
-        var installationError = scriptManager.installNewScript(filePath);
-        if (installationError) {
-            return installationError;
         }
 
     } catch (error) {
