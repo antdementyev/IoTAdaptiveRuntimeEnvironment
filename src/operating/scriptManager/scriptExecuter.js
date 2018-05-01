@@ -5,7 +5,7 @@ process.on('message', function(codeToRun) {
 
     var vm = require("vm");
 
-    var obj = { hal : hal };
+    var obj = { hal : hal, console };
     var context = vm.createContext(obj);
 
     var script = vm.createScript(codeToRun);
