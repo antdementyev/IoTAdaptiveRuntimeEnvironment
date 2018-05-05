@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+    <installationScript>
+        <scriptName>experiment1</scriptName>
+        <requiredHalFunctions>
+            <function>do2</function>
+        </requiredHalFunctions>
+        <script>
+            console.time(&quot;time&quot;);
+            var sum = &quot;&quot;;
+            for (var i = 0; i &lt; 10*1000*1000; i++) {
+                sum += &quot;a&quot;;
+            }
+            console.timeEnd(&quot;time&quot;);
+
+        </script>
+        <test>
+        </test>
+    </installationScript>
+</document>

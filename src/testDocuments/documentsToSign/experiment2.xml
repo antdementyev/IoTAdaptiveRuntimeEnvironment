@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document>
+    <installationScript>
+        <scriptName>experiment2</scriptName>
+        <requiredHalFunctions>
+            <function>do2</function>
+        </requiredHalFunctions>
+        <script>
+            console.time(&quot;time&quot;);
+            console.timeEnd(&quot;time&quot;);
+        </script>
+        <test>
+            while (true) {var sum = &quot;a&quot; + 1;}
+            //console.time(&quot;testTime&quot;);
+            //var sum = &quot;&quot;;
+            //for (var i = 0; i &lt; 10*1000*1000; i++) {
+            //    sum += &quot;a&quot;;
+            //}
+            //console.timeEnd(&quot;testTime&quot;);
+        </test>
+    </installationScript>
+</document>

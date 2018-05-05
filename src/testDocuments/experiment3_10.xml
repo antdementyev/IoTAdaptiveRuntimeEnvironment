@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>experiment2</scriptName>
+    <requiredHalFunctions>
+      <function>do2</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+        </script>
+    <test>&#xD;
+        </test>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>b2twBZU8kn3p+EFt7xvU6BjUO571jlifc4hMKRMpuW1jklXPRbCIsEmRj+dR5DPLDjIpPbJWXfqpxI8Z3hGtgoB46uc2hJ8SsxQNqYp/WRaWxefKp/L80vV7aP6A9P/lw7RfwVA6dEa1ZyG/7TMJMn0bu0yDToxm6iIZsChjr5w=</signature>
+  </scriptProvider>
+</document>

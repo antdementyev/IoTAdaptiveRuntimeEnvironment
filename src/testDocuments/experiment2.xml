@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>experiment2</scriptName>
+    <requiredHalFunctions>
+      <function>do2</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+            console.time("time");&#xD;
+            console.timeEnd("time");&#xD;
+        </script>
+    <test>&#xD;
+            while (true) {var sum = "a" + 1;}&#xD;
+            //console.time("testTime");&#xD;
+            //var sum = "";&#xD;
+            //for (var i = 0; i &lt; 10*1000*1000; i++) {&#xD;
+            //    sum += "a";&#xD;
+            //}&#xD;
+            //console.timeEnd("testTime");&#xD;
+        </test>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>h4sqEvc+RwUB249wsjOhD+mQc3aZFagFCt0kISiBAVlN1wFuUYV2HeSLnJhpxEwqPcun6ttEEaJkAIgCu/SFwfJ2jtVG0RQC3KZshlugHCKlmdnqEOb5Jcf1wpyTKZRBwMnZj85V/mNTvXsiX/vQKNlztxy5dCX0R7zsP9E3qSI=</signature>
+  </scriptProvider>
+</document>

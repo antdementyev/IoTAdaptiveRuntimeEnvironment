@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>test1</scriptName>
+    <requiredHalFunctions>
+      <function>do2</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+            var startTime = new Date().getTime();&#xD;
+            var bla = 0;&#xD;
+            for (var i = 0; i &lt; 100*1000*1000; i++) {&#xD;
+                bla += i;&#xD;
+            }&#xD;
+            var endTime = new Date().getTime();&#xD;
+            console.info("diff: " + (endTime-startTime));&#xD;
+&#xD;
+        </script>
+    <test>&#xD;
+        </test>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>WvfT8NiePiLgKUlkdgPyBRzFrm7t2wLi+ALht1WmPWUFWKHBUzO+qgIGJK93OkwmgpkGS4ra9X5bFx94gq2X81uNU6UEmbk62p36vHvFcMkrLucJLhtTnMmhjXmTTVEmm+4biiZAKHInKxL5iQKODpc0RqY92bQXMFhAyKNukNI=</signature>
+  </scriptProvider>
+</document>

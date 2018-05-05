@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<document>
+  <installationScript>
+    <scriptName>experiment2</scriptName>
+    <requiredHalFunctions>
+      <function>do2</function>
+    </requiredHalFunctions>
+    <script>&#xD;
+            console.debug("it is a line at the code with any operation" + (524/35));&#xD;
+        </script>
+    <test>&#xD;
+        </test>
+  </installationScript>
+  <scriptProvider>
+    <name>ScriptProvider</name>
+    <signature>nqUyMC67FclHuB8CVuQ573euLbeiOWN+S8aYo8Yd3CDBlh0IsG6DYUlmw60HhlIaw0aDOSqTp4wEtzjYSLyMUToqVFjHoQNZPqjp79gIgFB19KUoQEI4UgsWzEvOJWSaiX8BntWiqoQUh4WDa0e/rFNm23Q82lKPke4joSxsYSY=</signature>
+  </scriptProvider>
+</document>
